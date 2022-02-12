@@ -59,6 +59,10 @@ body {
   width: 50px;
 }
 
+.header__logo {
+  padding: 8px 0;
+}
+
 .logo {
   align-self: center;
 }

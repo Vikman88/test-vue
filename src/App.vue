@@ -1,55 +1,29 @@
 <template>
-  <header class="header">
-    <div class="header__wrapper">
-      <div class="header__logo logo">
-        <a href="#">
-          <img src="./assets/logo.png" alt="Логотип" class="logo__img" />
-        </a>
-      </div>
-      <div class="header__cart cart">
-        <a href="#">
-          <img src="./assets/cart.png" alt="Корзина" class="cart__img" />
-          <span
-            :style="{ padding: cart.length > 9 ? '5px 5px' : '2px 5px' }"
-            class="cart__count"
-            >{{ cart.length }}</span
-          >
-        </a>
-      </div>
-    </div>
-    <hr />
-  </header>
-  <main class="main">
-    <div class="main__wrapper">
-      <h1 class="sr-only">Каталог</h1>
-      <app-filter :brands="brands" @filterValue="filtered"></app-filter>
-      <app-item
-        :products="products"
-        :filter="filter"
-        @addItemToCart="addToCart"
-      ></app-item>
-    </div>
-  </main>
+  <component :is="currentComponent" :cart="cart" />
+  <router-view
+    :brands="brands"
+    :products="products"
+    @addCart="addToCart"
+  ></router-view>
 </template>
 
 <script>
 import { getProductsData, getBrandsData } from './fetch';
-import AppFilter from './components/AppFilter.vue';
-import AppItem from './components/AppItem.vue';
+import MainLayout from './layout/MainLayout.vue';
+import CartLayout from './layout/CartLayout.vue';
 
 export default {
   name: 'App',
 
   components: {
-    AppFilter,
-    AppItem,
+    CartLayout,
+    MainLayout,
   },
 
   data() {
     return {
       products: [],
       brands: [],
-      filter: '',
       cart: [],
     };
   },
@@ -59,18 +33,43 @@ export default {
       const responseProductsData = await getProductsData();
       const responseBrandsData = await getBrandsData();
       this.products = Object.values(responseProductsData);
+      console.log(this.products);
       this.brands = Object.values(responseBrandsData);
     })();
   },
 
-  methods: {
-    filtered(value) {
-      this.filter = value;
-    },
+  computed: {
+    currentComponent() {
+      console.log(this.$route);
 
+      switch (this.$route.meta.layout) {
+        case 'main':
+          return 'main-layout';
+        case 'cart':
+          return 'cart-layout';
+        default:
+          return 'main-layout';
+      }
+    },
+  },
+
+  methods: {
     addToCart(product) {
-      const currencyItem = this.products.filter(({ id }) => id === product.id);
-      this.cart = [...this.cart, currencyItem];
+      const currencyItem = {
+        ...this.products.find(({ id }) => id === product.id),
+        amount: 1,
+      };
+      const indexDublicate = this.cart.findIndex(
+        ({ id }) => id === currencyItem.id
+      );
+      console.log(indexDublicate);
+      if (indexDublicate !== -1) {
+        console.log('aa');
+        this.cart[indexDublicate].amount += 1;
+      } else {
+        this.cart = [...this.cart, currencyItem];
+      }
+      console.log('cart', this.cart);
     },
   },
 };
