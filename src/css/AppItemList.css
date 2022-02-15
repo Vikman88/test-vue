@@ -1,0 +1,29 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 25px;
+}
+
+.main__catalog {
+  padding: 20px;
+  padding-top: 0;
+}
+
+.catalog__title {
+  font-size: 35px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.product {
+  cursor: pointer;
+  border: solid 1px rgba(63, 63, 63, 0.1);
+  box-shadow: 0 0 5px rgba(63, 63, 63, 0.3);
+  border-radius: 0.7rem;
+  background-color: #fff;
+}
+
+.product:hover {
+  box-shadow: 0 0 15px rgba(69, 124, 150, 0.8);
+  transition: all 0.5s ease 0s;
+}

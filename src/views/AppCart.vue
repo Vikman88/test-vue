@@ -2,35 +2,38 @@
   <main class="main">
     <div class="main__wrapper">
       <h1 class="main__title">Shopping Cart</h1>
-      <section class="main__cart cart">
-        <table class="cart__table">
-          <tr class="cart__table-title table-title">
-            <th class="table-title__item">Item</th>
-            <th class="table-title__price">Price</th>
-            <th class="table-title__qty">Qty</th>
-            <th class="table-title__total">Total</th>
-          </tr>
-          <tr class="cart__product product">
-            <td class="product__item">a</td>
-            <td class="product__price">v</td>
-            <td class="product__qty">sd</td>
-            <td class="product__total">s</td>
-            <td class="product__remove-button remove-button">
-              <button class="remove-button"></button>
-            </td>
-          </tr>
-        </table>
-        <p class="cart__total-price"></p>
-        <button class="cart__button-checkout button-checkout">
-          <p class="button-checkout__name">Checkout</p>
-        </button>
-      </section>
+      <app-cart-list v-if="cart.size" :cart="cart">
+        <template #itemCart="{ item, amount }">
+          <app-cart-item
+            :item="item"
+            :amount="amount"
+            @delItem="$emit('delItem', $event)"
+            @changeAmount="$emit('changeAmount', $event)"
+          ></app-cart-item>
+        </template>
+      </app-cart-list>
+      <h2 class="empty-cart" v-else>Сart is empty :(</h2>
     </div>
   </main>
 </template>
 
 <script>
+import AppCartList from '../components/AppCartList.vue';
+import AppCartItem from '../components/AppCartItem.vue';
+
 export default {
+  name: 'AppCart',
+
+  components: {
+    AppCartList,
+    AppCartItem,
+  },
+
+  emits: {
+    delItem: null,
+    changeAmount: null,
+  },
+
   props: {
     cart: {
       type: Object,
@@ -40,10 +43,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.main__wrapper {
-  display: flex;
-  flex-direction: column;
-  margin: 15px;
-}
-</style>
+<style scoped src="../css/AppCart.css"></style>

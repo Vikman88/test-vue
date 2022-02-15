@@ -1,0 +1,89 @@
+.main__cart {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.cart__container-sum {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 30px;
+}
+
+.cart__total-price {
+  margin-left: 30px;
+  padding: 5px 10px;
+  align-self: flex-end;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cart__button-checkout {
+  padding: 7px 20px;
+  align-self: flex-end;
+}
+
+.button-checkout {
+  border-radius: 5px;
+  text-transform: uppercase;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.button-checkout:hover {
+  background-color: rgba(180, 180, 180, 0.3);
+  transition: all 0.2s ease 0s;
+}
+
+.button-checkout__name {
+  font-weight: bold;
+}
+
+.cart__table {
+  margin-top: 15px;
+}
+
+.cart__table-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.cart__table-title * {
+  padding: 5px;
+}
+
+.table-title {
+  font-size: 20px;
+  background-color: #fff;
+}
+
+.table-title__item {
+  flex-basis: 60%;
+}
+
+.table-title__price,
+.table-title__qty,
+.table-title__total {
+  flex-basis: 12%;
+  text-align: center;
+}
+
+.table-title__remove-button {
+  flex-basis: 4%;
+  text-align: center;
+}
+
+.cart__product {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+}
+
+.product {
+  background-color: #fff;
+}
+
+.product:hover {
+  background-color: rgba(226, 226, 226, 0.3);
+  transition: all 0.2s ease 0s;
+}

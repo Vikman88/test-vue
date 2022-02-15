@@ -3,7 +3,10 @@
   <router-view
     :brands="brands"
     :products="products"
+    :cart="cart"
     @addCart="addToCart"
+    @delItem="delItem"
+    @changeAmount="changeAmount"
   ></router-view>
 </template>
 
@@ -24,7 +27,7 @@ export default {
     return {
       products: [],
       brands: [],
-      cart: [],
+      cart: new Map(),
     };
   },
 
@@ -33,15 +36,12 @@ export default {
       const responseProductsData = await getProductsData();
       const responseBrandsData = await getBrandsData();
       this.products = Object.values(responseProductsData);
-      console.log(this.products);
       this.brands = Object.values(responseBrandsData);
     })();
   },
 
   computed: {
     currentComponent() {
-      console.log(this.$route);
-
       switch (this.$route.meta.layout) {
         case 'main':
           return 'main-layout';
@@ -54,7 +54,7 @@ export default {
   },
 
   methods: {
-    addToCart(product) {
+    /* addToCart(product) {
       const currencyItem = {
         ...this.products.find(({ id }) => id === product.id),
         amount: 1,
@@ -70,9 +70,32 @@ export default {
         this.cart = [...this.cart, currencyItem];
       }
       console.log('cart', this.cart);
+    }, */
+    changeAmount(event) {
+      const [item, amount] = event;
+      this.cart.set(item, amount);
+    },
+
+    delItem(item) {
+      /* const amountItem = this.cart.get(item);
+      if (amountItem < 2) { */
+      this.cart.delete(item);
+      /* } else {
+        this.cart.set(item, amountItem - 1);
+      } */
+    },
+
+    addToCart(product) {
+      const currencyItem = this.products.find(({ id }) => id === product.id);
+      if (this.cart.has(currencyItem)) {
+        const amount = this.cart.get(currencyItem);
+        this.cart.set(currencyItem, amount + 1);
+      } else {
+        this.cart.set(currencyItem, 1);
+      }
     },
   },
 };
 </script>
 
-<style src="./style.css"></style>
+<style src="./css/global.css"></style>

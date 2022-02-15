@@ -1,0 +1,10 @@
+.main__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 30px;
+}
+
+.empty-cart {
+  margin-top: 100px;
+  text-align: center;
+}

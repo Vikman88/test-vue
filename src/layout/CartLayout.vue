@@ -10,3 +10,5 @@
     <hr />
   </header>
 </template>
+
+<style scoped src="../css/layout.css"></style>

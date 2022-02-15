@@ -10,9 +10,9 @@
         <router-link to="/cart">
           <img src="../assets/cart.png" alt="Корзина" class="cart__img" />
           <span
-            :style="{ padding: cart.length > 9 ? '5px 5px' : '2px 5px' }"
+            :style="{ padding: amountCart > 9 ? '5px 5px' : '2px 5px' }"
             class="cart__count"
-            >{{ cart.length }}</span
+            >{{ amountCart }}</span
           >
         </router-link>
       </div>
@@ -29,5 +29,17 @@ export default {
       require: true,
     },
   },
+
+  computed: {
+    amountCart() {
+      let sum = 0;
+      this.cart.forEach((amount) => {
+        sum += amount;
+      });
+      return sum;
+    },
+  },
 };
 </script>
+
+<style scoped src="../css/layout.css"></style>

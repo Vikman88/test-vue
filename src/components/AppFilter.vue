@@ -33,3 +33,5 @@ export default {
   },
 };
 </script>
+
+<style scoped src="../css/AppFilter.css"></style>

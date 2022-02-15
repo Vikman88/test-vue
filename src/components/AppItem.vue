@@ -40,3 +40,5 @@ export default {
   },
 };
 </script>
+
+<style scoped src="../css/AppItem.css"></style>
