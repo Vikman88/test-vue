@@ -5,7 +5,8 @@
 
 .product__description {
   margin: 20px;
-  text-overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .product__name {
@@ -17,4 +18,10 @@
 .product__price {
   margin-top: 10px;
   font-size: 1.2rem;
+  text-overflow: clip;
+}
+
+.product__container-options {
+  display: flex;
+  flex-direction: column;
 }

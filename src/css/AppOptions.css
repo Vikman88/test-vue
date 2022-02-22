@@ -1,0 +1,61 @@
+.container-options__color,
+.container-options__size {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-options__title {
+  align-self: center;
+  width: 40px;
+}
+
+.container-options__color-variants,
+.container-options__size-variants {
+  display: flex;
+  flex-direction: row;
+  margin-left: 15px;
+}
+
+.color-variant__btn,
+.size-variant__btn {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.color-variant__btn input[type='radio'],
+.size-variant__btn input[type='radio'] {
+  display: none;
+}
+
+.color-variant__btn label,
+.size-variant__btn label {
+  display: inline-block;
+  cursor: pointer;
+  width: 40px;
+  height: 20px;
+  border: 1px solid #000;
+  border-radius: 6px;
+  user-select: none;
+  text-align: center;
+}
+
+.color-variant__btn input[type='radio']:checked + label {
+  border: 3px solid rgba(211, 11, 11, 0.877);
+  box-shadow: 2px 2px 5px rgb(114, 0, 0);
+}
+
+.size-variant__btn input[type='radio']:checked + label {
+  background: #ffe0a6;
+}
+
+.size-variant__btn label:hover {
+  color: #666;
+}
+
+.color-variant__btn input[type='radio']:disabled + label,
+.size-variant__btn input[type='radio']:disabled + label {
+  opacity: 0.2;
+  border: none;
+  box-shadow: none;
+}

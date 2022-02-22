@@ -2,11 +2,12 @@
   <main class="main">
     <div class="main__wrapper">
       <h1 class="sr-only">Каталог</h1>
-      <app-filter :brands="brands" @filterValue="filter = $event"></app-filter>
+      <app-filter :brands="brands" @filterValue="applyFilter"></app-filter>
       <app-item-List :products="products" :filter="filter">
         <template #item="{ productItem }">
           <app-item
-            @click="addToCart(productItem)"
+            @getCurrentProduct="productItem = $event"
+            @click="addToCart(productItem, $event)"
             :productItem="productItem"
           ></app-item>
         </template>
@@ -50,8 +51,15 @@ export default {
   },
 
   methods: {
-    addToCart(product) {
-      this.$emit('addCart', product);
+    applyFilter(event) {
+      this.filter = null;
+      this.$nextTick().then(() => (this.filter = event));
+    },
+
+    addToCart(product, { target }) {
+      if (target.dataset.target) {
+        this.$emit('addCart', product);
+      }
     },
   },
 };

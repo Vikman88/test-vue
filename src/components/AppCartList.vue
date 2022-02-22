@@ -10,8 +10,8 @@
       </tr>
       <tr
         class="cart__product product"
-        v-for="[item, amount] in cart"
-        :key="item.id"
+        v-for="[i, { item, amount }] in cart"
+        :key="i"
       >
         <slot name="itemCart" :item="item" :amount="amount"></slot>
       </tr>
@@ -37,7 +37,7 @@ export default {
   computed: {
     considerSum() {
       let sum = 0;
-      this.cart.forEach((amount, item) => {
+      this.cart.forEach(({ item, amount }) => {
         const { value } = item.regular_price;
         sum += value * amount;
       });

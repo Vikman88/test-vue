@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const productsUrl =
-  'https://raw.githubusercontent.com/fe-side/vue-test/master/assets/products.json';
+  'https://raw.githubusercontent.com/fe-side/vue-test/master/assets/level3/products.json';
 
 const brandsUrl =
   'https://raw.githubusercontent.com/fe-side/vue-test/master/assets/brands.json';

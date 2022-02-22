@@ -5,8 +5,10 @@
     </div>
     <div class="item__container-title">
       <p class="item__name">{{ item.title }} / Brand {{ item.brand }}</p>
-      <p class="item__color">Color: black</p>
-      <p class="item__size">Size: L</p>
+      <template v-if="isConfigurable">
+        <p class="item__color">Color: {{ getOptionsProduct.color }}</p>
+        <p class="item__size">Size: {{ getOptionsProduct.size }}</p>
+      </template>
     </div>
   </td>
   <td class="product__price">
@@ -49,7 +51,6 @@ export default {
   emits: {
     delItem: null,
     changeAmount: null,
-    changeCurrent: null,
   },
 
   props: {
@@ -75,8 +76,34 @@ export default {
   },
 
   computed: {
+    isConfigurable() {
+      const { sku } = this.item;
+      return sku.split('-').length > 1;
+    },
+
+    getOptionsProduct() {
+      const { variants } = this.item;
+      const { attributes } = variants.find(
+        ({ product }) => product.id === this.item.id
+      );
+      const { configurable_options } = this.item;
+      const labels = attributes.reduce((acc, { code, value_index }) => {
+        const { values } = configurable_options.find(
+          ({ attribute_code }) => attribute_code === code
+        );
+        const { label } = values.find((val) => val.value_index === value_index);
+        return { ...acc, [code]: label };
+      }, {});
+      return labels;
+    },
+
     getImagePath() {
-      return getImagePath(this.item.image);
+      const fileName = getImagePath(this.item.image);
+      if (this.item.type === 'simple') {
+        return require('../assets/' + fileName);
+      } else {
+        return require('../assets/conf/' + fileName);
+      }
     },
 
     getCurrency() {

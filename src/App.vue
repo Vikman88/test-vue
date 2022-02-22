@@ -54,44 +54,35 @@ export default {
   },
 
   methods: {
-    /* addToCart(product) {
-      const currencyItem = {
-        ...this.products.find(({ id }) => id === product.id),
-        amount: 1,
-      };
-      const indexDublicate = this.cart.findIndex(
-        ({ id }) => id === currencyItem.id
-      );
-      console.log(indexDublicate);
-      if (indexDublicate !== -1) {
-        console.log('aa');
-        this.cart[indexDublicate].amount += 1;
-      } else {
-        this.cart = [...this.cart, currencyItem];
-      }
-      console.log('cart', this.cart);
-    }, */
     changeAmount(event) {
       const [item, amount] = event;
-      this.cart.set(item, amount);
+      this.cart.set(item.id, { item, amount });
     },
 
     delItem(item) {
-      /* const amountItem = this.cart.get(item);
-      if (amountItem < 2) { */
-      this.cart.delete(item);
-      /* } else {
-        this.cart.set(item, amountItem - 1);
-      } */
+      this.cart.delete(item.id);
     },
 
     addToCart(product) {
-      const currencyItem = this.products.find(({ id }) => id === product.id);
-      if (this.cart.has(currencyItem)) {
-        const amount = this.cart.get(currencyItem);
-        this.cart.set(currencyItem, amount + 1);
+      let item;
+      if (!product.type) {
+        const confProductStr = product.id.toString();
+        const parentId = confProductStr.substring(0, confProductStr.length - 3);
+        const currencyItem = this.products.find(({ id }) => id == parentId);
+        const dublicateCurrencyItem = Object.assign({}, currencyItem);
+        dublicateCurrencyItem.id = parseInt(product.id, 10);
+        dublicateCurrencyItem.sku = product.sku;
+        dublicateCurrencyItem.image = product.image;
+        item = dublicateCurrencyItem;
       } else {
-        this.cart.set(currencyItem, 1);
+        item = product;
+      }
+
+      if (this.cart.has(item.id)) {
+        const { amount } = this.cart.get(item.id);
+        this.cart.set(item.id, { item, amount: amount + 1 });
+      } else {
+        this.cart.set(item.id, { item, amount: 1 });
       }
     },
   },

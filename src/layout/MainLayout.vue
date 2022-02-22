@@ -33,7 +33,7 @@ export default {
   computed: {
     amountCart() {
       let sum = 0;
-      this.cart.forEach((amount) => {
+      this.cart.forEach(({ amount }) => {
         sum += amount;
       });
       return sum;
